@@ -1,12 +1,10 @@
-FROM php:8.3.30-apache
+CREATE TABLE IF NOT EXISTS mail (
+    id SERIAL PRIMARY KEY,
+    subject TEXT NOT NULL,
+    body TEXT NOT NULL
+);
 
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
-
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends libpq-dev \
-    && docker-php-ext-install pdo pdo_pgsql \
-    && rm -rf /var/lib/apt/lists/*
-
-COPY ./docker/000-default.conf /etc/apache2/sites-available/000-default.conf
-
-WORKDIR /var/www/html
+-- Optional: insert a default entry for API testing
+INSERT INTO mail (subject, body)
+VALUES ('Welcome!', 'This is your first mail.')
+ON CONFLICT DO NOTHING;
