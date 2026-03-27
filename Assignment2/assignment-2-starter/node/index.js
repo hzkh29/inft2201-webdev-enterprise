@@ -32,8 +32,6 @@ http
             const fileData = fs.readFileSync("/usr/src/app/users.txt", "utf8");
             const lines = fileData.trim().split("\n");
 
-            console.log(lines);
-
             let foundUser = null;
 
             // Loop for match checking the entered values in the fields
@@ -47,10 +45,10 @@ http
 
               // parsing part
 
-              const userId = parts[0];
-              const username = parts[1];
-              const password = parts[2];
-              const role = parts[3];
+              const userId = parts[0].trim();
+              const username = parts[1].trim();
+              const password = parts[2].trim();
+              const role = parts[3].trim();
 
               // matching part
 
@@ -79,10 +77,17 @@ http
               return;
             }
 
-            // if the user if found
+            const payload = {
+              userId: foundUser.userId,
+              role: foundUser.role,
+            };
+
+            const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "1h" });
+
+            // if the user is found
 
             res.writeHead(200, { "Content-Type": "application/json" });
-            res.end(JSON.stringify(foundUser));
+            res.end(JSON.stringify({ token: token }));
             return;
 
             // on success, return an encoded userId and role using your JWT_SECRET.
