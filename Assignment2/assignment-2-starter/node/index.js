@@ -2,7 +2,7 @@ import http from "http";
 import fs from "fs";
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = "SET_A_RANDOM_STRING_FOR_FULL_MARKS";
+const JWT_SECRET = "mail-app-secret-2026-hezekiah-91742";
 
 http
   .createServer((req, res) => {

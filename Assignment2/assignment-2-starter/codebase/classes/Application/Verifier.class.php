@@ -21,7 +21,7 @@ class Verifier
 
             // Attempt to decode the token:
             try {
-                $token = JWT::decode($jwt, new Key("SET_A_RANDOM_STRING_FOR_FULL_MARKS", 'HS256'));
+                $token = JWT::decode($jwt, new Key("mail-app-secret-2026-hezekiah-91742", 'HS256'));
                 $this->userId = $token->userId;
                 $this->role = $token->role;
             } catch (\Throwable $e) {
